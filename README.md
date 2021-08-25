@@ -2,6 +2,6 @@
 
 ## small project blog
 *services
-  *-client
-  *-comments
-  *-posts
+*client
+*comments
+*posts
