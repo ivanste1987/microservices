@@ -1,29 +1,58 @@
 <template>
   <article>
-    <div v-for="c in allPostComments" :key="c.id" style="border: 1px solid red">
+    <h4>Post comments</h4>
+    <div v-for="c in trackComments" :key="c.id" class="com-card">
       <p>{{ c.text }}</p>
     </div>
   </article>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+// import { mapActions } from "vuex";
+import axios from "axios";
 export default {
   props: ["commentID"],
+  data() {
+    return {
+      comments: [],
+    };
+  },
   mounted() {
-    this.getCommnets();
- 
+  
+      this.getCommnets();
+    
   },
   computed: {
-    ...mapGetters(["allPostComments"]),
+    trackComments() {
+      return this.comments;
+    },
   },
   methods: {
-    getCommnets() {
-      this.$store.dispatch("GET_ALL_COMMENTS",{id: this.commentID});
+    async getCommnets() {
+      const response = await axios.get(
+        `http://localhost:5000/posts/${this.commentID}/comments`
+      );
+      this.comments = response.data;
     },
   },
 };
 </script>
 
-<style>
+<style lang="scss">
+article{
+  width: 800px;
+  height: auto;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+
+  .com-card{
+    box-shadow: 0 0 6px #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-basis: 250px;
+  }
+}
 </style>

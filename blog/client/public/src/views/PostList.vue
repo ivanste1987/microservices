@@ -2,7 +2,7 @@
   <div>
     <h1>Post list</h1>
     <section>
-      <article v-for="p in allPosts" :key="p.id">
+      <article v-for="p in allPosts" :key="p.id" class="card">
         <h2>{{ p.title }}</h2>
         <p>{{ p.text }}</p>
         <comments :commentID="p.id"></comments>
@@ -37,5 +37,21 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+section{
+  width: 800px;
+  height: auto;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  .card{
+    box-shadow: 0 0 6px #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+  }
+}
 </style>

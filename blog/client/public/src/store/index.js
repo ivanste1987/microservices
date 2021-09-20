@@ -5,6 +5,7 @@ export default createStore({
     newPost: {},
     allPosts: [],
     newComment: {},
+    counter: 0,
     allComments: [],
   },
   mutations: {
@@ -16,10 +17,12 @@ export default createStore({
     },
     setNewComment(state, payload) {
       state.newComment = payload;
+      state.counter += 1;
+      console.log(state.counter);
     },
     setAllComments(state, payload) {
-     
-      state.allComments.pop(payload);
+      state.allComments = payload;
+      console.log(state.allComments);
     },
   },
   actions: {
@@ -28,7 +31,6 @@ export default createStore({
 
       if (response.status === 201) {
         context.commit("setNewPosts", response.data);
-       
       } else {
         console.log("error");
       }
@@ -37,19 +39,23 @@ export default createStore({
       const response = await axios.get("http://localhost:4000/posts");
       context.commit("setAllPosts", response.data);
     },
-    async CREATE_NEW_COMMENT(context, payload){
-        const response = await axios.post(`http://localhost:5000/posts/${payload.id}/comments`, payload)
-        if (response.status === 201) {
-          context.commit("setNewComment", response.data);
-        } else {
-          console.log("error");
-        }
+    async CREATE_NEW_COMMENT(context, payload) {
+      const response = await axios.post(
+        `http://localhost:5000/posts/${payload.id}/comments`,
+        payload
+      );
+      if (response.status === 201) {
+        context.commit("setNewComment", response.data);
+      } else {
+        console.log("error");
+      }
     },
     async GET_ALL_COMMENTS(context, payload) {
-      const response = await axios.get(`http://localhost:5000/posts/${payload.id}/comments`);
-      console.log(response.data)
- 
-    
+      const response = await axios.get(
+        `http://localhost:5000/posts/${payload.id}/comments`
+      );
+      console.log(response.data);
+      context.commit("setAllComments", response.data);
     },
   },
   getters: {
@@ -57,7 +63,6 @@ export default createStore({
       return state.allPosts;
     },
     allPostComments(state) {
-      console.log('getter');
       console.log(state.allComments);
       return state.allComments;
     },
