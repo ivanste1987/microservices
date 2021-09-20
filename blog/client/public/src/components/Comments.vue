@@ -1,40 +1,16 @@
 <template>
   <article>
     <h4>Post comments</h4>
-    <div v-for="c in trackComments" :key="c.id" class="com-card">
+    <div v-for="c in commetns" :key="c.id" class="com-card">
+      <h6>{{ c.title }}</h6>
       <p>{{ c.text }}</p>
     </div>
   </article>
 </template>
 
 <script>
-// import { mapActions } from "vuex";
-import axios from "axios";
 export default {
-  props: ["commentID"],
-  data() {
-    return {
-      comments: [],
-    };
-  },
-  mounted() {
-  
-      this.getCommnets();
-    
-  },
-  computed: {
-    trackComments() {
-      return this.comments;
-    },
-  },
-  methods: {
-    async getCommnets() {
-      const response = await axios.get(
-        `http://localhost:5000/posts/${this.commentID}/comments`
-      );
-      this.comments = response.data;
-    },
-  },
+  props: ["commetns"],
 };
 </script>
 

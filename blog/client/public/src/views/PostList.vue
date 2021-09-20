@@ -5,7 +5,7 @@
       <article v-for="p in allPosts" :key="p.id" class="card">
         <h2>{{ p.title }}</h2>
         <p>{{ p.text }}</p>
-        <comments :commentID="p.id"></comments>
+        <comments :commetns="p.comments"></comments>
         <new-comment :postID="p.id"></new-comment>
       </article>
     </section>

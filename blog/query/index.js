@@ -5,36 +5,36 @@ const cors = require('cors')
 const app = express()
 
 app.use(bodyParser.json())
-app.use(cors)
+app.use(cors())
 
 const chalk = require('chalk')
 const log = console.log
 
 const PORT = 9000
 
-const posts = []
-
+const posts = {}
+console.log(posts)
 app.get('/posts', (req, res) => {
     res.send(posts)
 })
 
 app.post('/events', (req, res) => {
     const {type, data} = req.body
-    log(req.body)
+    
     if(type === "PostCreated"){
-        const {id, title, text} = data
+        const {id, title, text, postID} = data
 
-        const post = {id, title, text, comments: [] }
-        posts.push(post)
+        posts[id] = {id, title, text, comments: [] }
     }
 
     if(type === "CommentCreated"){
-        const {id, title, text} = data
+        const {id, title, text, postID} = data
 
         const post = posts[postID]
         post.comments.push({id, title, text})
     }
-    log(posts)
+    console.log(posts)
+    log(chalk.inverse.yellow(" query received event ", req.body))
     res.send({})
     
 })

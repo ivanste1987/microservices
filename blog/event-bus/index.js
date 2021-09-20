@@ -12,19 +12,19 @@ app.use(bodyParser.json())
 const PORT = 6000
 
 
-app.post("/events", (req, res) => {
+app.post("/events", async (req, res) => {
   const event = req.body;
   log(event)
   //posts 
-  axios.post('http://localhost:4000/events', event).catch((err) => {
+  await axios.post('http://localhost:4000/events', event).catch((err) => {
     log(chalk.inverse.red(err.message + " PORT 4000"));
   });
   //comments
-  axios.post('http://localhost:5000/events', event).catch((err) => {
+  await axios.post('http://localhost:5000/events', event).catch((err) => {
     log(chalk.inverse.red(err.message + " PORT 5000"));
   });
   //queri service
-  axios.post('http://localhost:9000/events', event).catch((err) => {
+  await axios.post('http://localhost:9000/events', event).catch((err) => {
     log(chalk.inverse.red(err.message + " PORT 9000"));
   });
 

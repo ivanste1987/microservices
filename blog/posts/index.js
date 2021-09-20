@@ -40,8 +40,6 @@ app.post('/posts', async (req, res) => {
     await axios.post('http://localhost:6000/events', {
         type: 'PostCreated',
         data: post
-    }).then(() => {
-        log(post)
     }).catch((err) => {
         log(chalk.inverse.red(err.message));
     });
